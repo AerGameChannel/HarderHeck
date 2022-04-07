@@ -13,3 +13,5 @@ SpiderHeck mod which makes the game much more harder.
 - There is 0.001% chance that any explosion's power will be multiplied by 2008 (the year of trollface emoji creation)
 - Cards' effects and maps are invisible in wave mode
 - Grenade and mine throw force is randomized
+- The life lose popup text is changed to Skill Issue
+- You're not able to see how many lifes you got anymore
