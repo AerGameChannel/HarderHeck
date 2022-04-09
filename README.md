@@ -1,3 +1,5 @@
+# The repository is now archive and won't get updates.
+
 # HarderHeck
 SpiderHeck mod which makes the game much more harder.
 
