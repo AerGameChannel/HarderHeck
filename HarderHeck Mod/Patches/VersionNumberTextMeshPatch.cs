@@ -7,7 +7,9 @@ namespace HarderHeck_Mod.Patches
     {
         public static void Postfix(VersionNumberTextMesh __instance)
         {
-            __instance.textMesh.text += $"\n<color=red>HarderHeck Mod v{Plugin.PluginInfo.Metadata.Version} by Aer</color>";
+            string isImpossibleMode = "";
+            if (Plugin.ImpossibleMode.Value) isImpossibleMode = "IMPOSSIBLE MODE";
+            __instance.textMesh.text += $"\n<color=red>HarderHeck Mod v{Plugin.PluginInfo.Metadata.Version} by Aer\n{isImpossibleMode}</color>";
         }
     }
 }

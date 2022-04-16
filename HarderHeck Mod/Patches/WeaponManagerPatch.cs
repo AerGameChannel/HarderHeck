@@ -8,28 +8,33 @@ namespace HarderHeck_Mod.Patches
         private static float defaultThrowForce;
         public static void Prefix(WeaponManager __instance)
         {
-            if (__instance.equippedWeapon.type.Contains(Weapon.WeaponType.Explosive))
+            defaultThrowForce = __instance.throwForce;
+            if (__instance.equippedWeapon.label == "Mine" || __instance.equippedWeapon.label == "Grenade")
             {
-                defaultThrowForce = __instance.throwForce;
                 float Multiplier = Plugin.ThrowForceMultiplier;
                 int chance = Plugin.Random.Next(0, 101);
                 if (chance <= 10)
                 {
                     __instance.throwForce *= 0.40f * Multiplier;
+                    return;
                 }
                 else if (chance > 10 && chance <= 40)
                 {
                     __instance.throwForce *= 0.60f * Multiplier;
+                    return;
                 }
                 else if (chance > 40 && chance <= 60)
                 {
                     __instance.throwForce *= 0.65f * Multiplier;
+                    return;
                 }
-                else if (chance > 60)
+                else
                 {
                     __instance.throwForce *= 0.70f * Multiplier;
+                    return;
                 }
             }
+            __instance.throwForce = defaultThrowForce;
         }
         public static void Postfix(WeaponManager __instance)
         {
