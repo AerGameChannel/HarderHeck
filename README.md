@@ -17,11 +17,9 @@ SpiderHeck mod which makes the game much more harder.
 - You're not able to see how many lifes you got anymore
 - Impossible Mode
 
-# More info about impossible mode
-- To turn on the impossible mode you have to go to `SpiderHeck/BepInEx/config/`, open com.aer.harderheck.cfg in notepad and set `ImpossibleMode` to `true`
-
-## Current features:
+# Impossible Mode info and current features
 - Only 3 modifiers are available
 - All the weapons have reduced ammo
 - Enemies will move and attack faster
 - Exploding rollers' time to explode after triggering is 1 second instead of 2
+- To turn on the impossible mode you have to go to `SpiderHeck/BepInEx/config/`, open com.aer.harderheck.cfg in notepad and set `ImpossibleMode` to `true`
