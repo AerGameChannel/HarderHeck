@@ -81,8 +81,6 @@ namespace HarderHeck_Mod.Patches
             {
                 Plugin.ModifierTitlesList.Add(modifiers.ElementAt(Plugin.Random.Next(0, modifiers.Count() + 1)).data.title);
             }
-
-            Plugin.Log.LogInfo(Plugin.ModifierTitlesList.Join(delimiter: ", "));
         }
         [HarmonyPatch("ResetAllWaveModifiers")]
         public static void Prefix()
