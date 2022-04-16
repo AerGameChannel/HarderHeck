@@ -74,12 +74,21 @@ namespace HarderHeck_Mod.Patches
         [HarmonyPatch("Awake")]
         public static void Postfix(ModifierManager __instance)
         {
-            var modifiers = Traverse.Create(__instance).Field("_modifiers").GetValue<List<Modifier>>().Where((Modifier m) => m.levelInWaves < m.data.maxLevel && m.data.waves);
+            var modifiers = Traverse.Create(__instance).Field("_modifiers").GetValue<List<Modifier>>().Where((Modifier m) => m.levelInWaves < m.data.maxLevel && m.data.waves).ToList();
             if (Plugin.ModifierTitlesList.Count > 0) return;
 
             for(int i = 0; i < 3; i++)
             {
-                Plugin.ModifierTitlesList.Add(modifiers.ElementAt(Plugin.Random.Next(0, modifiers.Count() + 1)).data.title);
+                var randint = Plugin.Random.Next(0, modifiers.Count() + 1);
+
+                while (Plugin.ModifierTitlesList.Contains(modifiers.ElementAt(randint).data.title))
+                {
+                    if (Plugin.ModifierTitlesList.Count == modifiers.Count()) break;
+
+                    randint = Plugin.Random.Next(0, modifiers.Count() + 1);
+                }
+
+                Plugin.ModifierTitlesList.Add(modifiers.ElementAt(randint).data.title);
             }
         }
         [HarmonyPatch("ResetAllWaveModifiers")]

@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace HarderHeck_Mod
 {
-    [BepInPlugin("com.aer.harderheck", "HarderHeck Mod", "1.2.0")]
+    [BepInPlugin("com.aer.harderheck", "HarderHeck Mod", "1.2.1")]
     public class Plugin : BaseUnityPlugin
     {	
         internal static float ThrowForceMultiplier = 0.9f;
