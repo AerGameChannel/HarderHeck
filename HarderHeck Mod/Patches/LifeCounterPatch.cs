@@ -3,7 +3,7 @@
 
 namespace HarderHeck_Mod.Patches
 {
-    [HarmonyPatch(typeof(WaveModeHud), "Update")]
+    [HarmonyPatch(typeof(WaveModeHud), nameof(WaveModeHud.Update))]
     public class LifeCounterPatch
     {
         public static void Postfix(WaveModeHud __instance)

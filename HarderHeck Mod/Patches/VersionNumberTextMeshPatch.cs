@@ -2,7 +2,7 @@
 
 namespace HarderHeck_Mod.Patches
 {
-    [HarmonyPatch(typeof(VersionNumberTextMesh), "Start")]
+    [HarmonyPatch(typeof(VersionNumberTextMesh), nameof(VersionNumberTextMesh.Start))]
     public class VersionNumberTextMeshPatch
     {
         public static void Postfix(VersionNumberTextMesh __instance)

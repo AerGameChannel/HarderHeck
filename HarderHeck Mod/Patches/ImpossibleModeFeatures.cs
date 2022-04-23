@@ -1,13 +1,12 @@
 ﻿using HarmonyLib;
-using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 namespace HarderHeck_Mod.Patches
 {
-    [HarmonyPatch(typeof(Weapon), "Start")]
+    [HarmonyPatch(typeof(Weapon))]
     public class WeaponPatch
     {
+        [HarmonyPatch(nameof(Weapon.Start))]
         public static void Postfix(Weapon __instance)
         {
             if (!Plugin.ImpossibleMode.Value) return;
@@ -16,32 +15,30 @@ namespace HarderHeck_Mod.Patches
             __instance.ammo = __instance.maxAmmo;
         }
     }
-    [HarmonyPatch(typeof(WaspBrain), "Start")]
+    [HarmonyPatch(typeof(WaspBrain), nameof(WaspBrain.Start))]
     public class WaspBrainPatch
     {
         public static void Postfix(WaspBrain __instance)
         {
-            if (!Plugin.ImpossibleMode.Value) return;
-            __instance.attackCooldown /= 2;
+            if (Plugin.ImpossibleMode.Value) __instance.attackCooldown /= 2;
         }
     }
-    [HarmonyPatch(typeof(ExplodingRoller), "TriggerExplosive")]
+    [HarmonyPatch(typeof(ExplodingRoller), nameof(ExplodingRoller.TriggerExplosive))]
     public class ExplodingRollerPatch
     {
         public static bool Prefix(ExplodingRoller __instance)
         {
             if (!Plugin.ImpossibleMode.Value) return true;
-            var traverse = Traverse.Create(__instance);
-            if (traverse.Field("_triggered").GetValue<bool>())
+            if (__instance._triggered)
             {
                 return false;
             }
-            traverse.Field("_triggered").SetValue(true);
-            traverse.Field("_timeToExplode").SetValue(Time.time + 1f);
+            __instance._triggered = true;
+            __instance._timeToExplode = Time.time + 1f;
             return false;
         }
     }
-    [HarmonyPatch(typeof(WhispBrain), "Start")]
+    [HarmonyPatch(typeof(WhispBrain), nameof(WhispBrain.Start))]
     public class WhispBrainPatch
     {
         public static void Prefix(WhispBrain __instance)
@@ -50,51 +47,73 @@ namespace HarderHeck_Mod.Patches
             __instance.movementCooldown /= 2;
         }
     }
-    [HarmonyPatch(typeof(KhepriBrain), "LaunchChargeAttack")]
+    [HarmonyPatch(typeof(KhepriBrain), nameof(KhepriBrain.LaunchChargeAttack))]
     public class KhepriBrainPatch
     {
         public static void Postfix(KhepriBrain __instance)
         {
             if (!Plugin.ImpossibleMode.Value) return;
-            Traverse.Create(__instance).Field("_shotCooldownTill").SetValue(Time.time + (__instance.shotCooldown / 2));
+            __instance._shotCooldownTill = Time.time + (__instance.shotCooldown / 2);
         }
     }
-    [HarmonyPatch(typeof(ModifierManager))]
+    [HarmonyPatch(typeof(ModifierManager), nameof(ModifierManager.GetNonMaxedWavesMods))]
     public class ModifierManagerPatch
     {
-        [HarmonyPatch("GetNonMaxedWavesMods")]
-        public static bool Prefix(ModifierManager __instance, ref List<Modifier> __result)
+        private static readonly List<Modifier> emptyList = new();
+        public static bool Prefix(ref List<Modifier> __result)
         {
             if (!Plugin.ImpossibleMode.Value) return true;
 
-            __result = Traverse.Create(__instance).Field("_modifiers").GetValue<List<Modifier>>().Where((Modifier m) => m.levelInWaves < m.data.maxLevel && m.data.waves && Plugin.ModifierTitlesList.Contains(m.data.title)).ToList();
-
+            __result = emptyList;
             return false;
         }
-        [HarmonyPatch("Awake")]
-        public static void Postfix(ModifierManager __instance)
+    }
+    [HarmonyPatch(typeof(ParticleBlade))]
+    public class ParticleBladePatch
+    {
+        [HarmonyPatch(nameof(ParticleBlade.Damage))]
+        [HarmonyPrefix]
+        public static void DamagePrefix(ParticleBlade __instance)
         {
-            var modifiers = Traverse.Create(__instance).Field("_modifiers").GetValue<List<Modifier>>().Where((Modifier m) => m.levelInWaves < m.data.maxLevel && m.data.waves).ToList();
-            if (Plugin.ModifierTitlesList.Count > 0) return;
-
-            for(int i = 0; i < 3; i++)
-            {
-                var randint = Plugin.Random.Next(0, modifiers.Count() + 1);
-
-                while (Plugin.ModifierTitlesList.Contains(modifiers.ElementAt(randint).data.title))
-                {
-                    if (Plugin.ModifierTitlesList.Count == modifiers.Count()) break;
-
-                    randint = Plugin.Random.Next(0, modifiers.Count() + 1);
-                }
-
-                Plugin.ModifierTitlesList.Add(modifiers.ElementAt(randint).data.title);
-            }
+            if (!Plugin.ImpossibleMode.Value) return;
+            if (__instance.ammo > 0f) __instance.ammo -= 1f;
         }
-        [HarmonyPatch("ResetAllWaveModifiers")]
-        public static void Prefix()
+        [HarmonyPatch(nameof(ParticleBlade.Impact))]
+        [HarmonyPrefix]
+        public static void ImpactPrefix(ParticleBlade __instance)
         {
-            Plugin.ModifierTitlesList.Clear();
+            if (!Plugin.ImpossibleMode.Value) return;
+            if (__instance.ammo > 0f) __instance.ammo -= 1f;
+        }
+    }
+    [HarmonyPatch(typeof(WeaponSpawner), nameof(WeaponSpawner.Start))]
+    public class WeaponSpawnerPatch
+    {
+        public static void Postfix(WeaponSpawner __instance)
+        {
+            if (!Plugin.ImpossibleMode.Value) return;
+            __instance._spawnRateMod = 0.5f;
+            __instance.spawnDelay = 6f;
+        }
+    }
+    [HarmonyPatch(typeof(WaveMode), nameof(WaveMode.GetRandomLevels))]
+    public class WaveModePatch
+    {
+        public static bool Prefix(ref List<GameLevel> __result)
+        {
+            if (!Plugin.ImpossibleMode.Value) return true;
+            __result = new List<GameLevel>() { Plugin.GameLevel };
+            return false;
+        }
+    }
+    [HarmonyPatch(typeof(GameSettings), nameof(GameSettings.RandomSurvivalStartLevel))]
+    public class GameSettingsPatch
+    {
+        public static bool Prefix(ref GameLevel __result)
+        {
+            if (!Plugin.ImpossibleMode.Value) return true;
+            __result = Plugin.GameLevel;
+            return false;
         }
     }
 }

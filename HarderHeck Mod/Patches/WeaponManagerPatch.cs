@@ -2,7 +2,7 @@
 
 namespace HarderHeck_Mod.Patches
 {
-    [HarmonyPatch(typeof(WeaponManager), "ThrowWeapon")]
+    [HarmonyPatch(typeof(WeaponManager), nameof(WeaponManager.ThrowWeapon))]
     public class WeaponManagerPatch
     {
         private static float defaultThrowForce;

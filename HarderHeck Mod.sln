@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.32014.148
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HarderHeck Mod", "HarderHeck Mod\HarderHeck Mod.csproj", "{5FE5AC92-E40F-48D6-94F8-946BB8E7C810}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HarderHeck Mod", "HarderHeck Mod\HarderHeck Mod.csproj", "{5FE5AC92-E40F-48D6-94F8-946BB8E7C810}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,8 +19,8 @@ Global
 		{5FE5AC92-E40F-48D6-94F8-946BB8E7C810}.Debug|x64.Build.0 = Debug|x64
 		{5FE5AC92-E40F-48D6-94F8-946BB8E7C810}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5FE5AC92-E40F-48D6-94F8-946BB8E7C810}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5FE5AC92-E40F-48D6-94F8-946BB8E7C810}.Release|x64.ActiveCfg = Release|x64
-		{5FE5AC92-E40F-48D6-94F8-946BB8E7C810}.Release|x64.Build.0 = Release|x64
+		{5FE5AC92-E40F-48D6-94F8-946BB8E7C810}.Release|x64.ActiveCfg = Release|Any CPU
+		{5FE5AC92-E40F-48D6-94F8-946BB8E7C810}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

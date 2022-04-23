@@ -1,49 +1,24 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+      <TargetFramework>netstandard2.0</TargetFramework>
+      <LangVersion>latest</LangVersion>
+      <ImplicitUsings>enable</ImplicitUsings>
+      <Nullable>enable</Nullable>
+      <DebugType>embedded</DebugType>
+      <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 
-  <PropertyGroup>
-    <TargetFramework>net472</TargetFramework>
-    <AssemblyName>HarderHeck.Mod</AssemblyName>
-    <Description>The mod that makes the game much harder</Description>
-    <Version>1.0.0</Version>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <LangVersion>latest</LangVersion>
-    <Platforms>AnyCPU;x64</Platforms>
-    <AutoGenerateBindingRedirects>True</AutoGenerateBindingRedirects>
-  </PropertyGroup>
+      <Description>Example SpiderHeck mod</Description>
+      <Version>1.0.1</Version>
+    </PropertyGroup>
 
-  <ItemGroup>
-    <Reference Include="0Harmony">
-      <HintPath>..\References\0Harmony.dll</HintPath>
-    </Reference>
-    <Reference Include="BepInEx">
-      <HintPath>..\References\BepInEx.dll</HintPath>
-    </Reference>
-    <Reference Include="MyScriptAssembly">
-      <HintPath>..\References\MyScriptAssembly.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.TextMeshPro">
-      <HintPath>..\References\Unity.TextMeshPro.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine">
-      <HintPath>..\References\UnityEngine.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.AudioModule">
-      <HintPath>..\References\UnityEngine.AudioModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.CoreModule">
-      <HintPath>..\References\UnityEngine.CoreModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.Physics2DModule">
-      <HintPath>..\References\UnityEngine.Physics2DModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.UI">
-      <HintPath>..\References\UnityEngine.UI.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.UIModule">
-      <HintPath>..\References\UnityEngine.UIModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.UIModule">
-      <HintPath>..\References\I2.dll</HintPath>
-    </Reference>
-  </ItemGroup>
+    <PropertyGroup>
+        <GameVersion>0.76.1-r.1</GameVersion>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="BepInEx.Unity" Version="6.0.0-be.556" PrivateAssets="all" />
+        <PackageReference Include="SpiderHeck.GameLibs" Version="$(GameVersion)" PrivateAssets="all" />
+
+        <PackageReference Include="UnityEngine.Modules" Version="2020.3.13" PrivateAssets="all" />
+    </ItemGroup>
 </Project>
